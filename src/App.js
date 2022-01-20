@@ -7,7 +7,6 @@ import { getActivities } from './actions';
 import './App.css';
 // Components
 import ActivityItem from './components/ActivityItem';
-import NewActivitiesButton from './components/NewActivitiesButton';
 
 const App = (props) => {
   const { loading, error, getActivities } = props;
@@ -22,13 +21,6 @@ const App = (props) => {
 
       {(error !== "") && <p className='error-msg'>{error}</p>}
       {loading ? <h4>Loading activities...</h4> : <ActivityItem />}
-      
-
-      <NewActivitiesButton />
-      <br />
-      <br />
-      <br />
-      <p>https://www.boredapi.com/api/activity</p>
     </div>
   );
 }
