@@ -2,25 +2,18 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchStart, fetchSuccess } from './actions';
+import { getActivities } from './actions';
 // CSS
 import './App.css';
 // Components
 import ActivityItem from './components/ActivityItem';
 import NewActivitiesButton from './components/NewActivitiesButton';
 
-
-import axios from 'axios';
-
 const App = (props) => {
-  const { loading, error, fetchStart, fetchSuccess } = props;
+  const { loading, error, getActivities } = props;
   
   useEffect(() => {
-    fetchStart();
-    axios.get("https://www.boredapi.com/api/activity")
-      .then(resp => {
-        fetchSuccess(resp.data);
-      });
+    getActivities();
   }, []);
 
   return (
@@ -47,4 +40,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchStart, fetchSuccess })(App);
+export default connect(mapStateToProps, { getActivities })(App);
