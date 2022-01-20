@@ -1,23 +1,34 @@
 // React
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+
+import { fetchStart, fetchSuccess } from './actions';
 // CSS
 import './App.css';
 // Components
-import ActivityContainer from './components/ActivityContainer';
+import ActivityItem from './components/ActivityItem';
 import NewActivitiesButton from './components/NewActivitiesButton';
 
 
+import axios from 'axios';
+
 const App = (props) => {
-  const { loading, error } = props;
+  const { loading, error, fetchStart, fetchSuccess } = props;
   
+  useEffect(() => {
+    fetchStart();
+    axios.get("https://www.boredapi.com/api/activity")
+      .then(resp => {
+        fetchSuccess(resp.data);
+      });
+  }, []);
 
   return (
     <div className="app">
-      <h2>Activities to do When You're Bored!</h2>
+      <h3>Activities to do When You're Bored!</h3>
 
       {(error !== "") && <p className='error-msg'>{error}</p>}
-      {loading ? <h4>Loading activities...</h4> : <ActivityContainer />}
+      {loading ? <h4>Loading activities...</h4> : <ActivityItem />}
       
 
       <NewActivitiesButton />
@@ -36,4 +47,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { fetchStart, fetchSuccess })(App);
